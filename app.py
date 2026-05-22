@@ -262,6 +262,22 @@ def generate():
 
         html_content = out_path.read_text(encoding="utf-8")
 
+    nav_button = """
+<div style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99999">
+  <a href="/" style="display:inline-flex;align-items:center;gap:7px;
+     padding:9px 18px;background:white;color:#374151;
+     border:1px solid #d1d5db;border-radius:999px;
+     font:600 13px system-ui,sans-serif;text-decoration:none;
+     box-shadow:0 2px 8px rgba(0,0,0,.15);
+     transition:box-shadow .2s,border-color .2s"
+     onmouseover="this.style.boxShadow='0 4px 14px rgba(0,0,0,.2)';this.style.borderColor='#6366f1'"
+     onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.15)';this.style.borderColor='#d1d5db'">
+    &#8592; Ana Menü
+  </a>
+</div>
+</body>"""
+    html_content = html_content.replace("</body>", nav_button)
+
     return html_content, 200, {"Content-Type": "text/html; charset=utf-8"}
 
 
