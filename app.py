@@ -17,6 +17,8 @@ RUN
 
 import io
 import tempfile
+import threading
+import webbrowser
 from pathlib import Path
 
 from flask import Flask, request, render_template_string
@@ -243,4 +245,5 @@ def generate():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    threading.Timer(1.2, lambda: webbrowser.open("http://localhost:5000")).start()
+    app.run(debug=False, port=5000)

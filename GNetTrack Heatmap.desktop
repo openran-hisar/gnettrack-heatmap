@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=G-NetTrack Heatmap
+Comment=Drive-test KML dosyasindan interaktif kapsama haritasi olustur
+Exec=python3 /home/oran/heatmap/app.py
+Icon=applications-internet
+Terminal=false
+Type=Application
+Categories=Science;Network;
