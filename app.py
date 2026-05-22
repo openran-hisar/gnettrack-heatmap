@@ -16,6 +16,8 @@ RUN
 """
 
 import io
+import os
+import signal
 import tempfile
 import threading
 import webbrowser
@@ -140,6 +142,21 @@ _INDEX = """<!DOCTYPE html>
       color: #dc2626;
       font-size: 13px;
     }
+
+    /* Kapat butonu */
+    .btn-quit {
+      margin-top: 12px;
+      width: 100%;
+      padding: 9px;
+      background: none;
+      color: #9ca3af;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+    }
+    .btn-quit:hover { color: #dc2626; border-color: #fca5a5; }
   </style>
 </head>
 <body>
@@ -169,6 +186,10 @@ _INDEX = """<!DOCTYPE html>
     {% if error %}<div class="error">{{ error }}</div>{% endif %}
 
     <button type="submit" class="btn" id="btn">Harita Olustur</button>
+  </form>
+
+  <form method="POST" action="/shutdown">
+    <button type="submit" class="btn-quit">Uygulamayı Kapat</button>
   </form>
 </div>
 
@@ -242,6 +263,33 @@ def generate():
         html_content = out_path.read_text(encoding="utf-8")
 
     return html_content, 200, {"Content-Type": "text/html; charset=utf-8"}
+
+
+_GOODBYE = """<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kapatılıyor…</title>
+  <style>
+    body { font: 15px/1.5 system-ui, sans-serif; display: flex; align-items: center;
+           justify-content: center; height: 100vh; margin: 0; background: #f0f2f5; }
+    .box { text-align: center; color: #6b7280; }
+    .box h2 { font-size: 20px; color: #111827; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Uygulama kapatıldı.</h2>
+    <p>Bu sekmeyi kapatabilirsiniz.</p>
+  </div>
+</body>
+</html>"""
+
+
+@app.route("/shutdown", methods=["POST"])
+def shutdown():
+    threading.Timer(0.5, lambda: os.kill(os.getpid(), signal.SIGTERM)).start()
+    return _GOODBYE
 
 
 if __name__ == "__main__":
