@@ -278,7 +278,7 @@ def _stats_panel_html(datasets: dict, active_metrics: list[str]) -> str:
         )
 
     return (
-        '<div id="sp" style="position:fixed;top:60px;right:12px;z-index:9999;'
+        '<div id="sp" style="position:fixed;top:80px;left:10px;z-index:9999;'
         'background:white;padding:12px 14px;border:1px solid #ccc;'
         'border-radius:6px;font:12px/1.4 system-ui,sans-serif;'
         'box-shadow:0 2px 6px rgba(0,0,0,.15);width:244px">'
